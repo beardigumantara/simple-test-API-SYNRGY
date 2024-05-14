@@ -21,4 +21,11 @@ router.get('/:id', (req: Request, res: Response) => {
   });
 });
 
+//Update /EdIT
+router.put('/:id', (req: Request, res: Response) => {
+  const getId:number = Number(req.params.id);
+  const { name, price, startRent } = req.body;
+  const carById = cars.find(({id}) => id === getId);
+})
+
 export default router;
