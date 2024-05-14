@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import { cars } from '../__data_mocks__/cars';
+import filterCars from "../utils/filter";
+import { connect } from "http2";
 
 const router = Router();
 
@@ -15,9 +17,13 @@ router.get('/:id', (req: Request, res: Response) => {
   const getId:number = Number(req.params.id);
   console.log(getId);
   
-  const carById = cars.find((car) => car.id === getId);
+  // const carById = cars.find((car) => car.id === getId);
+  // res.status(200).json({
+  //   carById
+  // });
+  const carById = filterCars(cars, getId);
   res.status(200).json({
-    carById
+    cars: carById
   });
 });
 
@@ -25,7 +31,7 @@ router.get('/:id', (req: Request, res: Response) => {
 router.put('/:id', (req: Request, res: Response) => {
   const getId:number = Number(req.params.id);
   const { name, price, startRent } = req.body;
-  const carById = cars.find(({id}) => id === getId);
+  const carById = filterCars(cars, getId);
 })
 
 export default router;
