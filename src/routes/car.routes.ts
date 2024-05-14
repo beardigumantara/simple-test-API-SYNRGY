@@ -30,15 +30,16 @@ router.get("/:id", (req: Request, res: Response) => {
 //Update /Edit
 router.put("/:id", (req: Request, res: Response) => {
   const getId: number = Number(req.params.id);
-  const { name, price, startRent} = req.body;
+  const {name, price, startRent, finishRent} = req.body;
   const carById = filterCars(cars, getId);
-
+  // console.log({bodyParam});
+  
   const updatedCarByID = {
     ...carById,
     id: getId,
-    name: "Toyota",
-    price: 200000,
-    startRent: "05/04/2022",
+    name,
+    price,
+    startRent,
     createdAt: "02/04/2022",
     updatedAt: "02/04/2022",
   };
