@@ -58,4 +58,16 @@ router.put("/:id", (req: Request, res: Response) => {
   // console.log({carById});
 });
 
+// create car
+router.post("/create", (req: Request, res: Response) => {
+  const bodyReq = req.body;
+  console.log({bodyReq});
+
+  res.status(201).json({
+    status: "success",
+    message: "Car created successfully",
+  });
+  
+});
+
 export default router;
