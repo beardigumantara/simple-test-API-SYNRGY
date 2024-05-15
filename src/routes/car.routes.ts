@@ -58,6 +58,19 @@ router.put("/:id", (req: Request, res: Response) => {
   // console.log({carById});
 });
 
+// deleted car by id
+router.delete("/:id", (req: Request, res: Response) => {
+  const getId: number = Number(req.params.id);
+  const filterCar = cars.filter(({id}) => id !== getId);
+  console.log({filterCar});
+
+  res.status(200).json({
+    status: "success",
+    message: "Car deleted successfully",
+    cars: filterCar,
+  });
+})
+
 // create car
 router.post("/create", (req: Request, res: Response) => {
   const bodyReq = req.body;
