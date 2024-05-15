@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { cars } from "../__data_mocks__/cars";
 import filterCars from "../utils/filter";
 import { connect } from "http2";
+import { v4 as uuidv4 } from "uuid";
 
 const router = Router();
 
@@ -73,12 +74,21 @@ router.delete("/:id", (req: Request, res: Response) => {
 
 // create car
 router.post("/create", (req: Request, res: Response) => {
-  const bodyReq = req.body;
-  console.log({bodyReq});
+  const {name, price, startRent, finishRent} = req.body;
+  const newCar = {
+    id: uuidv4(),
+    name,
+    price,
+    startRent,
+    finishRent,
+    createdAt: "02/04/2022",
+    updatedAt: "02/04/2022",
+  }
 
   res.status(201).json({
     status: "success",
     message: "Car created successfully",
+    data: newCar,
   });
   
 });
