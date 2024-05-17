@@ -3,13 +3,16 @@ import { cars } from "../__data_mocks__/cars";
 import filterCars from "../utils/filter";
 import { connect } from "http2";
 import { v4 as uuidv4 } from "uuid";
+import pool from "../db";
 
 const router = Router();
 
 // Get
-router.get("/", (req: Request, res: Response) => {
+router.get("/", async (_req: Request, res: Response) => {
+  const result = await pool.query("SELECT * FROM cars");
+  const data = result.rows;
   res.status(200).json({
-    cars,
+    cars : data,
   });
 });
 
