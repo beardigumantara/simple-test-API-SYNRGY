@@ -17,17 +17,19 @@ router.get("/", async (_req: Request, res: Response) => {
 });
 
 // Get specific car by id
-router.get("/:id", (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const getId: number = Number(req.params.id);
-  console.log(getId);
+  const query = await pool.query(`SELECT * FROM cars WHERE id = ${getId}`,);
+  // console.log(getId);
 
   // const carById = cars.find((car) => car.id === getId);
   // res.status(200).json({
   //   carById
   // });
-  const carById = filterCars(cars, getId);
+  const result = query.rows[0];
+  // const carById = filterCars(cars, getId);
   res.status(200).json({
-    cars: carById,
+    cars: result,
   });
 });
 
