@@ -76,22 +76,26 @@ router.delete("/:id", (req: Request, res: Response) => {
 })
 
 // create car
-router.post("/create", (req: Request, res: Response) => {
-  const {name, price, startRent, finishRent} = req.body;
-  const newCar = {
-    id: uuidv4(),
-    name,
-    price,
-    startRent,
-    finishRent,
-    createdAt: "02/04/2022",
-    updatedAt: "02/04/2022",
-  }
+router.post("/create", async (req: Request, res: Response) => {
+  const {name, startRent, finishRent, avaliability} = req.body;
+  // insert data base on table your db
+  const idCar = Math.floor(Math.random() * 1000);
+  const query = await pool.query("INSERT INTO cars (id, name, startRent, finishRent, avaliability) VALUES ($1, $2, $3, $4, $5) RETURNING *", [idCar, name, startRent, finishRent, avaliability]);
+  const createdCar = query.rows;
+  // const newCar = {
+  //   id: uuidv4(),
+  //   name,
+  //   price,
+  //   startRent,
+  //   finishRent,
+  //   createdAt: "02/04/2022",
+  //   updatedAt: "02/04/2022",
+  // }
 
   res.status(201).json({
     status: "success",
     message: "Car created successfully",
-    data: newCar,
+    data: createdCar,
   });
   
 });
