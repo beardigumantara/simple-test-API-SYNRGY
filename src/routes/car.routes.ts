@@ -4,17 +4,12 @@ import filterCars from "../utils/filter";
 import { connect } from "http2";
 import { v4 as uuidv4 } from "uuid";
 import pool from "../db";
+import { getCars } from "../controllers/CarController";
 
 const router = Router();
 
 // Get
-router.get("/", async (_req: Request, res: Response) => {
-  const result = await pool.query("SELECT * FROM cars");
-  const data = result.rows;
-  res.status(200).json({
-    cars: data,
-  });
-});
+router.get("/", getCars);
 
 // Get specific car by id
 router.get("/:id", async (req: Request, res: Response) => {
